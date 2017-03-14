@@ -12,12 +12,12 @@ it('should instantiate a new ball', () => {
   assert.isObject(ball);
 })
 
-it.skip('should have a default x velocity', ()=>{
+it('should have a default x velocity', ()=>{
   var ball = new Ball();
   assert.equal(ball.velocityX, 4)
 })
 
-it.skip('should have a default y velocity', ()=>{
+it('should have a default y velocity', ()=>{
   var ball = new Ball();
   assert.equal(ball.velocityY, 4)
 })

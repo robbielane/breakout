@@ -1,5 +1,6 @@
 body {
   font-family: 'Press Start 2P', cursive;
+  text-align: center;
 }
 
 canvas {
@@ -10,11 +11,13 @@ canvas {
   background-color: #000000;
 }
 
-h1,
-h2 {
-  text-align: center;
+#instructions {
+  margin: auto;
+  margin-bottom: 20px;
+  width: 650px;
 }
 
 li {
   line-height: 1.3em;
+  text-align: left;
 }

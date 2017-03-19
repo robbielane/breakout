@@ -7,6 +7,15 @@ canvas {
   border: 1px dashed tomato;
 }
 
+#scores {
+  margin-bottom: 20px;
+}
+
+#scores h3 {
+  display: inline;
+  margin-right: 20px;
+}
+
 #game {
   background-color: #000000;
 }

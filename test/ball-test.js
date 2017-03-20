@@ -54,7 +54,7 @@ describe('ball', () => {
 
 })
 
-module.exports = Ball;
+// module.exports = Ball;
 
 
 

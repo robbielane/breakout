@@ -6,7 +6,7 @@ describe('World', () => {
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
   const world = new World(canvas);
-  const livesCount = document.createElement('h3').classList += 'lives'
+  // const livesCount = document.createElement('h3').classList += 'lives'
 
 
   it('startGame changes the balls velocity from 0 to 4 on click', () => {
@@ -16,8 +16,6 @@ describe('World', () => {
       assert.equal(world.ball.vx, 4)
       assert.equal(world.ball.vy, -4)
     }
-
-
 
   })
 
@@ -35,14 +33,14 @@ describe('World', () => {
     assert.equal(world.ball.vx, 4 )
   })
 
-  it.skip('wallCollision should change x velocity when there is a right wall collision', () => {
+  it('wallCollision should change x velocity when there is a right wall collision', () => {
     world.ball.vx = 4
     world.ball.x = 601
     world.wallCollision();
     assert.equal(world.ball.vx, -4 )
   })
 
-  it.skip('should change Y velocity when hitting the top wall', () =>{
+  it('should change Y velocity when hitting the top wall', () =>{
     world.ball.vy = -4
     world.ball.y = -1
     world.ceilingCollision();

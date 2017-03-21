@@ -3,9 +3,9 @@ import {assert} from 'chai'
 
 describe('World', () => {
   const canvas = document.createElement('canvas')
-  const ctx = canvas.getContext('2d')
+  // const ctx = canvas.getContext('2d')
   const world = new World(canvas);
-  const livesCount = document.createElement('h3').classList += 'lives'
+  // const livesCount = document.createElement('h3').classList += 'lives'
 
 
   it('startGame changes the balls velocity from 0 to 4 on click', () => {

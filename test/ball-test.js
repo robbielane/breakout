@@ -1,7 +1,7 @@
 
-// import World from '../lib/world'
-import Ball from '../lib/ball'
-import {assert} from 'chai'
+const World = require('../lib/world')
+const Ball = require('../lib/ball')
+const assert = require('chai').assert
 
 describe('ball', () => {
   let ball = new Ball();

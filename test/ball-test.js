@@ -1,12 +1,12 @@
 
-import World from '../lib/world'
+// import World from '../lib/world'
 import Ball from '../lib/ball'
 import {assert} from 'chai'
 
 describe('ball', () => {
   let ball = new Ball();
-  const canvas = document.createElement('canvas')
-  const ctx = canvas.getContext('2d')
+  // const canvas = document.createElement('canvas')
+  // const ctx = canvas.getContext('2d')
 
   it('should be a function', () =>{
     assert.isFunction(Ball)
@@ -14,16 +14,19 @@ describe('ball', () => {
 
   it('should instantiate a new ball', () => {
     var ball = new Ball();
+
     assert.isObject(ball);
   })
 
   it('should have a default x velocity', () =>{
     var ball = new Ball();
+
     assert.equal(ball.vx, 0)
   })
 
   it('should have a default y velocity', () =>{
     var ball = new Ball();
+
     assert.equal(ball.vy, 0)
   })
 

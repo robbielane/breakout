@@ -1,5 +1,5 @@
-import World from '../lib/world'
-import {assert} from 'chai'
+const World = require ('../lib/world')
+const assert = require ('chai').assert
 
 describe('World', () => {
   const canvas = document.createElement('canvas')

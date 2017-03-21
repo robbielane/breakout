@@ -1,2 +1,2 @@
-require('./ball-test')
-require('./world-test')
+require('./ball-test');
+require('./world-test');

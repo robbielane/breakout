@@ -19,26 +19,15 @@ describe('ball', () => {
 
   it('should have a default x velocity', () =>{
     var ball = new Ball();
-    assert.equal(ball.vx, 3)
+    assert.equal(ball.vx, 0)
   })
 
   it('should have a default y velocity', () =>{
     var ball = new Ball();
-    assert.equal(ball.vy, -3)
+    assert.equal(ball.vy, 0)
   })
 
-  it('should change X velocity when hitting the side wall', () =>{
 
-    assert.equal(ball.vx, 3);
-    ball.wallCollision();
-    assert.equal(ball.vx, -3)
-  })
-
-  it.skip('should change Y velocity when hitting the top wall', () =>{
-    assert.equal(ball.vy, -3);
-    ceilingCollision();
-    assert.equal(ball.vy, 3)
-  })
 
   it.skip('should change Y velocity when hitting the paddle', () =>{
     assert.equal(ball.vy, -4);

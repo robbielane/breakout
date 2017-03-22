@@ -5,12 +5,13 @@ describe('World', () => {
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
   let world = new World(canvas);
-  const livesCount = document.createElement('h3').classList += 'lives'
-
-  // let livesNo = document.createElement("h3");
+  // const livesCount = document.createElement('h3').classList += 'lives'
+  //
+  // // let livesNo = document.createElement("h3").classList += 'score';
   //   let livesText = document.createTextNode("our text");
-  //   livesNo.append(livesText);
-  //   document.body.append(livesNo);
+  //   // livesNo.append(livesCount);
+  //   document.body.append(lives);
+    // document.getElementById('mocha').classList.add('lives')
 
   // var oNewP = document.createElement("h3");
   //   var oText = document.createTextNode("www.java2s.com");

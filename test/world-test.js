@@ -1,13 +1,40 @@
 const World = require('../lib/world')
-const Ball = require('../lib/ball')
 const assert = require('chai').assert
 
 describe('World', () => {
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
-  const world = new World(canvas);
-  // const livesCount = document.createElement('h3').classList += 'lives'
+  let world = new World(canvas);
+  const livesCount = document.createElement('h3').classList += 'lives'
 
+
+  it('should be a function', () =>{
+    assert.isFunction(World)
+  })
+
+  it('should have a width', () => {
+    assert.equal(world.width, 600)
+  })
+
+  it('should have a height', () => {
+    assert.equal(world.height, 500)
+  })
+
+  it('should have 3 lives by default', function() {
+    assert.equal(world.lives, 3)
+  })
+
+  it('should have a score of 0 by default', function() {
+    assert.equal(world.score, 0)
+  })
+
+  it('should have a level of 1 by default', function() {
+    assert.equal(world.level, 1)
+  })
+
+  it('should have an array of 40 blocks', () => {
+    assert.equal(world.blocksArray.length, 40)
+  })
 
   it('startGame changes the balls velocity from 0 to 4 on click', () => {
     assert.equal(world.ball.vx, 0);
@@ -46,6 +73,24 @@ describe('World', () => {
     world.ceilingCollision();
     assert.equal(world.ball.vy, 4)
   })
+
+  it('should take a block out of the array when the ball hits a block', () => {
+    assert.equal(world.blocksArray.length, 40)
+    world.ball.y = 105
+    world.ball.x = 17
+    world.blockCollide()
+    assert.equal(world.blocksArray.length, 39)
+  })
+
+  it('should increase score when the ball hits a block', () =>{
+    let world = new World(canvas);
+    assert.equal(world.score, 0)
+    world.ball.y = 105
+    world.ball.x = 17
+    world.blockCollide()
+    assert.equal(world.score, 1)
+  })
+
 
   it.skip('should decrement one life when the ball hits the bottom and lives are > 1', () => {
     assert.equal(world.lives, 3)

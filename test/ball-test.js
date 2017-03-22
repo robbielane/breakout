@@ -43,9 +43,11 @@ describe('ball', () => {
   })
 
 
-  it('should dissappear when hitting the bottom', ()=> {
+  it('should create a new ball when ball hits the bottom', ()=> {
+    var ball = new Ball();
+    ball.y == 520
     world.bottomCollision();
-    assert.isNotObject(ball);
+    assert.equal(world.ball.y, 430);
   })
 
 })

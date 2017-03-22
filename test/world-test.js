@@ -7,6 +7,15 @@ describe('World', () => {
   let world = new World(canvas);
   const livesCount = document.createElement('h3').classList += 'lives'
 
+  // let livesNo = document.createElement("h3");
+  //   let livesText = document.createTextNode("our text");
+  //   livesNo.append(livesText);
+  //   document.body.append(livesNo);
+
+  // var oNewP = document.createElement("h3");
+  //   var oText = document.createTextNode("www.java2s.com");
+  //   oNewP.appendChild(oText);
+  //   document.body.appendChild(oNewP);
 
   it('should be a function', () =>{
     assert.isFunction(World)

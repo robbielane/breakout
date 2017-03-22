@@ -4,7 +4,7 @@ const Ball = require('../lib/ball')
 const assert = require('chai').assert
 
 describe('ball', () => {
-  let ball = new Ball();
+  let ball = new Ball(300, 400, 'green');
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
   const world = new World(canvas);
@@ -36,6 +36,10 @@ describe('ball', () => {
   it('should have a default y velocity', () =>{
     var ball = new Ball();
     assert.equal(ball.vy, 0)
+  })
+
+  it('should have a color', () => {
+    assert.equal(ball.color, 'green')
   })
 
 

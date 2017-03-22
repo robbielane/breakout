@@ -1,5 +1,5 @@
 const World = require('../lib/world')
-const Paddle = require('../lib/Paddle');
+const Paddle = require('../lib/paddle');
 const assert = require('chai').assert
 
 describe('Paddle', () => {

@@ -70,8 +70,5 @@ describe('Paddle', () => {
     assert.equal(world.ball.vy, -4);
   })
 
-  it.skip('should move with the mouse', () => {
-
-  })
 
 })

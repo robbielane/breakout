@@ -102,9 +102,9 @@ describe('World', () => {
   })
 
 
-  it.skip('should decrement one life when the ball hits the bottom and lives are > 1', () => {
+  it('should decrement one life when the ball hits the bottom and lives are > 1', () => {
     assert.equal(world.lives, 3)
-    world.ball.y = 512
+    world.ball.y = 520
     world.bottomCollision(world.ctx)
     assert.equal(world.lives, 2)
 

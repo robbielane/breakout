@@ -1,13 +1,24 @@
 const World = require('../lib/world')
-const Ball = require('../lib/ball')
 const assert = require('chai').assert
 
 describe('World', () => {
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
   const world = new World(canvas);
-  // const livesCount = document.createElement('h3').classList += 'lives'
+  const livesCount = document.createElement('h3').classList += 'lives'
 
+
+  it('should be a function', () =>{
+    assert.isFunction(World)
+  })
+
+  it('should have a width', () => {
+    assert.equal(world.width, 600)
+  })
+
+  it('should have a height', () => {
+    assert.equal(world.height, 500)
+  })
 
   it('startGame changes the balls velocity from 0 to 4 on click', () => {
     assert.equal(world.ball.vx, 0);

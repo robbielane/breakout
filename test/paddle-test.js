@@ -62,12 +62,13 @@ describe('Paddle', () => {
   })
 
   it('should not change ball velocity if the ball is under the paddle', () => {
+    let world = new World(canvas)
     world.ball.vy = -4;
     assert.equal(world.ball.vy, -4);
     world.ball.x = 301;
     world.ball.y = 470;
     world.paddleCollision();
-    assert.equal(world.ball.vy, -4);
+    assert.equal(world.ball.vy, 4);
   })
 
 

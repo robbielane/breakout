@@ -40,6 +40,15 @@ describe('Block', () => {
     assert.equal(world.ball.vy, 4);
   })
 
+  it('should take a block out of the array when the ball hits the block', () => {
+    let world = new World();
+
+    assert.equal(world.blocksArray.length, 40)
+    world.ball.y = 105
+    world.ball.x = 17
+    world.blockCollide()
+    assert.equal(world.blocksArray.length, 39)
+  })
 
 
 })

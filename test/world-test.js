@@ -73,14 +73,6 @@ describe('World', () => {
     assert.equal(world.ball.vy, 4)
   })
 
-  it('should take a block out of the array when the ball hits a block', () => {
-    assert.equal(world.blocksArray.length, 40)
-    world.ball.y = 105
-    world.ball.x = 17
-    world.blockCollide()
-    assert.equal(world.blocksArray.length, 39)
-  })
-
   it('should increase score when the ball hits a block', () =>{
     let world = new World(canvas);
 
@@ -91,7 +83,6 @@ describe('World', () => {
     assert.equal(world.score, 1)
   })
 
-
   it('should decrement one life when the ball hits the bottom and lives are > 1', () => {
     world.lives = 3
     assert.equal(world.lives, 3)
@@ -100,6 +91,5 @@ describe('World', () => {
     assert.equal(world.lives, 2)
 
   })
-
 
 })

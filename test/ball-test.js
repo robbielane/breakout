@@ -3,16 +3,16 @@ const Ball = require('../lib/ball')
 const assert = require('chai').assert
 
 describe('Ball', () => {
-  let ball = new Ball(300, 400, 'green');
+  let ball = new Ball(300, 400, 'green')
   const canvas = document.createElement('canvas')
-  const world = new World(canvas);
+  const world = new World(canvas)
 
   it('should be a function', () =>{
     assert.isFunction(Ball)
   })
 
   it('should instantiate a new ball', () => {
-    assert.isObject(ball);
+    assert.isObject(ball)
   })
 
   it('should have a radius', () => {
@@ -33,8 +33,8 @@ describe('Ball', () => {
 
   it('should create a new ball when ball hits the bottom', ()=> {
     ball.y == 520
-    world.bottomCollision();
-    assert.equal(world.ball.y, 430);
+    world.bottomCollision()
+    assert.equal(world.ball.y, 430)
   })
 
 })

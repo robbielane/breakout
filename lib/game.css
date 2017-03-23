@@ -17,7 +17,7 @@ h1 {
 .score,
 .lives,
 .level {
-  color: #b71f1f;
+  color: #ffffff;
 }
 
 #scores {
@@ -36,7 +36,7 @@ h3 {
 
 h2,
 li {
-  color: #b71f1f;
+  color: #ffffff;
   font-size: 1.8em;
   margin: 0;
 }

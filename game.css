@@ -1,5 +1,5 @@
 body {
-  background-image: url('/game-time/images/skatebg.jpg');
+  background-image: url('./images/skatebg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   font-family: 'Just Me Again Down Here', cursive;

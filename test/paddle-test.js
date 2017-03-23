@@ -4,7 +4,6 @@ const assert = require('chai').assert
 
 describe('Paddle', () => {
   const canvas = document.createElement('canvas')
-  const ctx = canvas.getContext('2d')
   let world = new World(canvas);
 
   it('should be a function', () =>{
@@ -63,6 +62,7 @@ describe('Paddle', () => {
 
   it('should not change ball velocity if the ball is under the paddle', () => {
     let world = new World(canvas)
+
     world.ball.vy = -4;
     assert.equal(world.ball.vy, -4);
     world.ball.x = 301;

@@ -48,6 +48,7 @@
 	const canvas = document.getElementById('game');
 	const ctx = canvas.getContext('2d');
 	const world = new World(ctx);
+	const newGameBtn = document.getElementById('start-new-game');
 
 	requestAnimationFrame(function gameLoop() {
 
@@ -58,7 +59,6 @@
 	  world.ceilingCollision();
 	  world.bottomCollision(ctx);
 	  world.paddleCollision(world.paddle);
-	  world.sidePaddleCollision(world.paddle);
 
 	  ctx.fillStyle = "#556BFC";
 	  for (var i = 0; i < world.blocksArray.length; i++) {
@@ -73,22 +73,10 @@
 	  }
 	});
 
-	document.addEventListener('mousemove', function (e) {
+	world.movePaddle();
 
-	  let worldX = canvas.getBoundingClientRect().left;
-
-	  if (e.clientX < worldX) {
-	    world.paddle.x = 0;
-	  } else if (e.offsetX > world.width - 80) {
-	    world.paddle.x = world.width - 80;
-	  } else if (e.offsetX < world.width - 80) {
-	    world.paddle.x = e.offsetX;
-	  }
-	});
-
-	document.addEventListener('click', function (e) {
-	  console.log(e.offsetX, "x");
-	  console.log(e.offsetY, 'y');
+	newGameBtn.addEventListener('click', function () {
+	  window.location.reload();
 	});
 
 /***/ },
@@ -104,7 +92,7 @@
 	const levelCount = document.querySelector('.level');
 
 	class World {
-	  constructor(ctx) {
+	  constructor() {
 	    this.width = 600;
 	    this.height = 500;
 	    this.ball = new Ball(Math.floor(Math.random() * (599 - 1)) + 1, 430, "rgba(0, 255, 0, 1)");
@@ -114,97 +102,32 @@
 	    this.lives = 3;
 	    this.level = 1;
 	    this.win = false;
-	  }
-	  newLevelDraw(ctx) {
-	    this.blocksArray = createBlocks();
-	    this.ball = new Ball(Math.floor(Math.random() * (599 - 1)) + 1, 430, "rgba(0, 255, 0, 1)");
-	  }
-
-	  newLevel(ctx) {
-	    if (this.score == 5 && this.level == 1 || this.score == 10 && this.level == 2) {
-	      this.level++;
-	      this.levelUpdate();
-	      this.newLevelDraw(ctx);
-	      // } if (this.score == 10 && this.level == 2) {
-	      //   this.level ++;
-	      //   this.levelUpdate()
-	      //   this.newLevelDraw();
-	      // } if (this.score == 15 && this.level == 3) {
-	      //   this.level ++;
-	      //   this.levelUpdate()
-	      //   this.newLevelDraw();
-	      // }
-	    } else if (this.score == 15 && this.level == 3) {
-	      this.winGame(ctx);
-	    }
+	    this.image = new Image();
+	    this.blockDestroySound = new Audio("/game-time/sounds/hoha.mp3");
+	    this.paddleSound = new Audio("/game-time/sounds/suh.mp3");
+	    this.winSound = new Audio("/game-time/sounds/lit.mp3");
 	  }
 
+	  movePaddle() {
+	    document.addEventListener('mousemove', function (e) {
+
+	      let worldX = canvas.getBoundingClientRect().left;
+
+	      if (e.clientX < worldX) {
+	        this.paddle.x = 0;
+	      } else if (e.offsetX > this.width - 80) {
+	        this.paddle.x = this.width - 80;
+	      } else if (e.offsetX < this.width - 80) {
+	        this.paddle.x = e.offsetX;
+	      }
+	    }.bind(this));
+	  }
+
+	  //canvas borders collision
 	  ceilingCollision() {
 	    if (this.ball.y + this.ball.vy < 5) {
 	      this.ball.vy = -this.ball.vy;
 	    }
-	  }
-
-	  blockCollide(ctx) {
-	    for (var i = 0; i < this.blocksArray.length; i++) {
-	      if (this.blockCollisionTop(this.blocksArray[i]) || this.blockCollisionBottom(this.blocksArray[i])) {
-	        this.ball['vy'] = this.ball['vy'] * -1;
-	        this.blocksArray.splice(i, 1);
-	        this.score++;
-	        this.scoreUpdate();
-	        this.newLevel(ctx);
-	      } else if (this.blockCollisonLeft(this.blocksArray[i]) || this.blockCollisonRight(this.blocksArray[i])) {
-	        this.ball['vx'] = this.ball['vx'] * -1;
-	        this.blocksArray.splice(i, 1);
-	        this.score++;
-	        this.scoreUpdate();
-	        this.newLevel(ctx);
-	      }
-	    }
-	  }
-
-	  blockCollisonLeft(block) {
-	    if (this.ball.x + this.ball.radius >= block.x && this.ball.x + this.ball.radius <= block.x + 7 && this.ball.y + this.ball.radius >= block.y && this.ball.y - this.ball.radius <= block.y + block.height) return true;
-	  }
-
-	  blockCollisonRight(block) {
-	    if (this.ball.x + this.ball.radius >= block.x + 60 && this.ball.x + this.ball.radius <= block.x + block.width && this.ball.y + this.ball.radius >= block.y && this.ball.y - this.ball.radius <= block.y + block.height) return true;
-	  }
-
-	  blockCollisionBottom(block) {
-	    if (this.ball.x + this.ball.radius >= block.x && this.ball.x - this.ball.radius <= block.x + block.width && this.ball.y - this.ball.radius >= block.y + 10 && this.ball.y - this.ball.radius <= block.y + block.height) return true;
-	  }
-
-	  blockCollisionTop(block) {
-	    if (this.ball.x + this.ball.radius >= block.x && this.ball.x - this.ball.radius <= block.x + block.width && this.ball.y + this.ball.radius >= block.y && this.ball.y + this.ball.radius <= block.y + 5) return true;
-	  }
-
-	  paddleCollision() {
-	    if (this.ball.x + this.ball.radius >= this.paddle.x && //ball inside paddle left end
-	    this.ball.x - this.ball.radius <= this.paddle.x + this.paddle.width && //ball inside paddle right end
-	    this.ball.y + this.ball.radius > this.paddle.y && //ball below paddle top
-	    this.ball.y + this.ball.radius <= this.paddle.y + this.paddle.height) {
-	      //ball above paddle bottom
-
-	      this.ball.vy = this.ball.vy * -1;
-	    }
-	  }
-
-	  sidePaddleCollision() {
-	    if (this.ball.x + this.ball.radius <= this.paddle.x && //ball inside paddle left end
-	    this.ball.x - this.ball.radius >= this.paddle.x + this.paddle.width && //ball inside paddle right end
-	    this.ball.y + this.ball.radius >= this.paddle.y && //ball bellow paddle top
-	    this.ball.y + this.ball.radius <= this.paddle.y + this.paddle.height) {
-	      //ball above paddle bottom
-
-	      this.ball.vx = this.ball.vx * -1;
-	    }
-	  }
-
-	  drawScore(ctx) {
-	    ctx.font = "16px Arial";
-	    ctx.fillStyle = 'yellow';
-	    ctx.fillText("score: " + this.score, 20, 140);
 	  }
 
 	  wallCollision() {
@@ -224,25 +147,92 @@
 	    }
 	  }
 
-	  gameOver(ctx) {
-	    ctx.font = "30px 'Press Start 2P'";
-	    ctx.fillStyle = 'yellow';
-	    ctx.fillText("GAME OVER", 170, 240);
-	    ctx.font = "12px 'Press Start 2P'";
-	    ctx.fillText("click to restart", 210, 270);
-	    restartGame();
+	  //blocks collision
+	  blockCollide(ctx) {
+	    for (var i = 0; i < this.blocksArray.length; i++) {
+	      if (this.blockCollisionTop(this.blocksArray[i]) || this.blockCollisionBottom(this.blocksArray[i])) {
+	        this.ball['vy'] = this.ball['vy'] * -1;
+	        this.blocksArray.splice(i, 1);
+	        this.blockDestroySound.play();
+	        this.resultsUpdate(ctx);
+	      } else if (this.blockCollisonLeft(this.blocksArray[i]) || this.blockCollisonRight(this.blocksArray[i])) {
+	        this.ball['vx'] = this.ball['vx'] * -1;
+	        this.blocksArray.splice(i, 1);
+	        this.blockDestroySound.play();
+	        this.resultsUpdate(ctx);
+	      }
+	    }
 	  }
 
-	  winGame(ctx) {
-	    ctx.font = "30px 'Press Start 2P'";
-	    ctx.fillStyle = 'yellow';
-	    ctx.fillText("You Win", 170, 240);
-	    ctx.font = "12px 'Press Start 2P'";
-	    ctx.fillText("click to restart", 210, 270);
-	    this.win = true;
-	    // restartGame();
+	  resultsUpdate(ctx) {
+	    this.score++;
+	    this.scoreUpdate();
+	    this.newLevel(ctx);
 	  }
 
+	  blockCollisonLeft(block) {
+	    let blockLeftZone = block.x + 7;
+
+	    if (this.ball.x + this.ball.radius >= block.x && this.ball.x + this.ball.radius <= blockLeftZone && this.ball.y + this.ball.radius >= block.y && this.ball.y - this.ball.radius <= block.y + block.height) return true;
+	  }
+
+	  blockCollisonRight(block) {
+	    let blockRightZone = block.x + 60;
+
+	    if (this.ball.x + this.ball.radius >= blockRightZone && this.ball.x + this.ball.radius <= block.x + block.width && this.ball.y + this.ball.radius >= block.y && this.ball.y - this.ball.radius <= block.y + block.height) return true;
+	  }
+
+	  blockCollisionBottom(block) {
+	    let blockBottomZone = block.y + 10;
+
+	    if (this.ball.x + this.ball.radius >= block.x && this.ball.x - this.ball.radius <= block.x + block.width && this.ball.y - this.ball.radius >= blockBottomZone && this.ball.y - this.ball.radius <= block.y + block.height) return true;
+	  }
+
+	  blockCollisionTop(block) {
+	    let blockTopZone = block.y + 5;
+
+	    if (this.ball.x + this.ball.radius >= block.x && this.ball.x - this.ball.radius <= block.x + block.width && this.ball.y + this.ball.radius >= block.y && this.ball.y + this.ball.radius <= blockTopZone) return true;
+	  }
+
+	  //paddle collision
+	  paddleCollision() {
+	    let radius = this.ball.radius;
+
+	    if (this.ball.y + radius >= this.paddle.y && this.ball.y - radius <= this.paddle.y + this.paddle.height) {
+	      this.paddleCollisionTop();
+	      this.paddleCollisionTopLeft();
+	      this.paddleCollisionTopRight();
+	    }
+	  }
+
+	  paddleCollisionTop() {
+	    if (this.ball.x + this.ball.radius >= this.paddle.x - 1 && this.ball.x - this.ball.radius <= this.paddle.x + this.paddle.width + 1) {
+	      this.ball.vy = this.ball.vy * -1;
+	      this.paddleSound.play();
+	    }
+	  }
+
+	  paddleCollisionTopLeft() {
+	    let paddleLeftZone = 25;
+	    let radius = this.ball.radius;
+
+	    if (this.ball.x + radius >= this.paddle.x && this.ball.x + radius < this.paddle.x + paddleLeftZone && this.ball.vx > 0) {
+	      this.ball.vx = this.ball.vx * -1;
+	      this.paddleSound.play();
+	    }
+	  }
+
+	  paddleCollisionTopRight() {
+	    let paddleRightZone = 55;
+	    let radius = this.ball.radius;
+
+	    if (this.ball.x - radius <= this.paddle.x + this.paddle.width && this.ball.x - radius > this.paddle.x + paddleRightZone && this.ball.vx < 0) {
+	      this.ball.vx = this.ball.vx * -1;
+	      this.paddleSound.play();
+	    }
+	  }
+
+	  //scores
 	  livesUpdate() {
 	    livesCount.innerText = this.lives;
 	  }
@@ -255,14 +245,51 @@
 	    scoreCount.innerText = this.score;
 	  }
 
+	  newLevel(ctx) {
+	    if (this.score == 40 && this.level == 1 || this.score == 80 && this.level == 2) {
+	      this.level++;
+	      this.levelUpdate();
+	      this.newLevelDraw(ctx);
+	    } else if (this.score == 120 && this.level == 3) {
+	      this.winGame(ctx);
+	    }
+	  }
+
+	  newLevelDraw() {
+	    this.blocksArray = createBlocks();
+	    this.ball = new Ball(Math.floor(Math.random() * (599 - 1)) + 1, 430, "rgba(0, 255, 0, 1)");
+	  }
+
+	  gameOver(ctx) {
+	    ctx.font = "30px 'Just Me Again Down Here'";
+	    ctx.fillStyle = '#FEC325';
+	    ctx.fillText("GAME OVER", 170, 240);
+	    ctx.font = "12px 'Just Me Again Down Here'";
+	    ctx.fillText("click to restart", 210, 270);
+	    restartGame();
+	  }
+
+	  winGame(ctx) {
+
+	    ctx.font = "40px 'Just Me Again Down Here'";
+	    ctx.fillStyle = '#FEC325';
+	    ctx.fillText("Suh Dude,You Win", 180, 240);
+	    ctx.font = "24px 'Just Me Again Down Here'";
+	    ctx.fillText("Click the button below to restart fam", 150, 290);
+	    ctx.font = "30px 'Just Me Again Down Here'";
+	    ctx.fillText("it's so lit right now", 200, 330);
+
+	    this.win = true;
+	    this.winSound.play();
+	  }
+
 	  startGame(ctx) {
 	    if (this.ball.vx === 0 && this.ball.vy === 0) {
-	      ctx.font = "25px 'Press Start 2P'";
-	      ctx.fillStyle = 'yellow';
-	      ctx.fillText("CLICK TO START", 130, 240);
+	      ctx.font = "25px 'Just Me Again Down Here'";
+	      ctx.fillStyle = '#FEC325';
+	      ctx.fillText("CLICK TO START FAM", 200, 240);
 	    }
 	    document.querySelector('canvas').addEventListener('click', () => {
-	      // console.log('levelCount', this.level)
 	      if (this.ball.vx === 0) {
 	        this.ball.vx = 3 + this.level;
 	        this.ball.vy = -3 - this.level;
@@ -304,6 +331,7 @@
 	    this.y = y;
 	    this.radius = 10;
 	    this.color = color;
+	    this.image = new Image();
 	  }
 
 	  draw(ctx) {
@@ -312,6 +340,10 @@
 	    ctx.closePath();
 	    ctx.fillStyle = this.color;
 	    ctx.fill();
+
+	    this.image.src = '/game-time/images/jhun.png';
+	    ctx.drawImage(this.image, this.x - 10, this.y - 10, 20, 20);
+
 	    return this;
 	  }
 
@@ -337,14 +369,19 @@
 	    this.color = color;
 	    this.height = 15;
 	    this.width = 80;
+	    this.image = new Image();
 	  }
 
 	  draw(ctx) {
-	    ctx.fillStyle = this.color;
-	    ctx.fillRect(this.x, this.y, this.width, this.height);
+	    ctx.fillStyle = '#FEC325';
+	    ctx.fillRect(this.x, this.y, this.width, 3);
+	    ctx.fillStyle = '#000000';
+	    ctx.fillRect(this.x + 25, this.y, 30, 3);
+	    this.image.src = '/game-time/images/skateboard.png';
+	    ctx.drawImage(this.image, this.x, this.y - 13, this.width, 45);
+
 	    return this;
 	  }
-
 	}
 
 	module.exports = Paddle;
@@ -359,11 +396,14 @@
 	    this.y = y;
 	    this.height = 15;
 	    this.width = 67;
+	    this.image = new Image();
 	  }
 
 	  draw(ctx) {
-	    // ctx.fillStyle = this.color;
-	    ctx.fillRect(this.x, this.y, this.width, this.height);
+
+	    this.image.src = '/game-time/images/burritorb.jpg';
+	    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+
 	    return this;
 	  }
 	}

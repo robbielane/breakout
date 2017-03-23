@@ -1,14 +1,32 @@
 body {
-  font-family: 'Press Start 2P', cursive;
+  background-image: url('../images/skatebg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'Just Me Again Down Here', cursive;
   text-align: center;
 }
 
 canvas {
-  border: 1px dashed tomato;
+  border: 1px dashed black;
+}
+
+h1 {
+  font-size: 4em;
+}
+
+.score,
+.lives,
+.level {
+  color: #b71f1f;
 }
 
 #scores {
   margin-bottom: 20px;
+}
+
+#scores,
+h3 {
+  font-size: 1.7em;
 }
 
 #scores h3 {
@@ -16,25 +34,35 @@ canvas {
   margin-right: 20px;
 }
 
+h2,
+li {
+  color: #b71f1f;
+  font-size: 1.8em;
+  margin: 0;
+}
+
 #game {
-  background-color: #000000;
+  background-color: #595353;
 }
 
 #instructions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: auto;
   margin-bottom: 20px;
   width: 650px;
 }
 
 #start-new-game {
-  background-color: #556BFC;
+  background-color: #FEC325;
   border: 1px solid black;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 12px;
+  cursor: pointer;
+  font-family: 'Just Me Again Down Here', cursive;
+  font-size: 18px;
   height: 30px;
   margin: 30px 0 20px 0;
   outline: none;
-  padding-top: 5px;
   width: 250px;
 }
 

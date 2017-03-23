@@ -5,18 +5,7 @@ describe('World', () => {
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
   let world = new World(canvas);
-  // const livesCount = document.createElement('h3').classList += 'lives'
-  //
-  // // let livesNo = document.createElement("h3").classList += 'score';
-  //   let livesText = document.createTextNode("our text");
-  //   // livesNo.append(livesCount);
-  //   document.body.append(lives);
-    // document.getElementById('mocha').classList.add('lives')
 
-  // var oNewP = document.createElement("h3");
-  //   var oText = document.createTextNode("www.java2s.com");
-  //   oNewP.appendChild(oText);
-  //   document.body.appendChild(oNewP);
 
   it('should be a function', () =>{
     assert.isFunction(World)
@@ -94,6 +83,7 @@ describe('World', () => {
 
   it('should increase score when the ball hits a block', () =>{
     let world = new World(canvas);
+
     assert.equal(world.score, 0)
     world.ball.y = 105
     world.ball.x = 17
@@ -103,16 +93,13 @@ describe('World', () => {
 
 
   it('should decrement one life when the ball hits the bottom and lives are > 1', () => {
+    world.lives = 3
     assert.equal(world.lives, 3)
     world.ball.y = 520
-    world.bottomCollision(world.ctx)
+    world.bottomCollision(ctx)
     assert.equal(world.lives, 2)
 
   })
 
-  it.skip('should print game over when out of lives and ball hits the bottom', () => {
-    //assert lives = 1
-    //have ball hit bottom
-  })
 
 })

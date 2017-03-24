@@ -103,9 +103,9 @@
 	    this.level = 1;
 	    this.win = false;
 	    this.image = new Image();
-	    this.blockDestroySound = new Audio("/game-time/sounds/hoha.mp3");
-	    this.paddleSound = new Audio("/game-time/sounds/suh.mp3");
-	    this.winSound = new Audio("/game-time/sounds/lit.mp3");
+	    this.blockDestroySound = new Audio("/breakout/sounds/hoha.mp3");
+	    this.paddleSound = new Audio("/breakout/sounds/suh.mp3");
+	    this.winSound = new Audio("/breakout/sounds/lit.mp3");
 	  }
 
 	  movePaddle() {
@@ -341,7 +341,7 @@
 	    ctx.fillStyle = this.color;
 	    ctx.fill();
 
-	    this.image.src = '/game-time/images/jhun.png';
+	    this.image.src = '/breakout/images/jhun.png';
 	    ctx.drawImage(this.image, this.x - 10, this.y - 10, 20, 20);
 
 	    return this;
@@ -377,7 +377,7 @@
 	    ctx.fillRect(this.x, this.y, this.width, 3);
 	    ctx.fillStyle = '#000000';
 	    ctx.fillRect(this.x + 25, this.y, 30, 3);
-	    this.image.src = '/game-time/images/skateboard.png';
+	    this.image.src = '/breakout/images/skateboard.png';
 	    ctx.drawImage(this.image, this.x, this.y - 13, this.width, 45);
 
 	    return this;
@@ -401,7 +401,7 @@
 
 	  draw(ctx) {
 
-	    this.image.src = '/game-time/images/burritorb.jpg';
+	    this.image.src = '/breakout/images/burritorb.jpg';
 	    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
 
 	    return this;
